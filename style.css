@@ -38,6 +38,34 @@ header h1 {
   font-size: 0.95rem;
 }
 
+.api-key-area {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.api-key-area label {
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+#api-key-input {
+  width: 260px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+#api-key-input::placeholder {
+  color: #666;
+}
+
 .game-area {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
