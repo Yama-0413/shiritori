@@ -1,6 +1,3 @@
-// Gemini APIキー
-const GEMINI_API_KEY = 'AIzaSyAN7L-CpAJnaauoHrTm1XeP9XtO_gIqW3k';
-
 // DOM要素
 const wordChain     = document.getElementById('word-chain');
 const wordInput     = document.getElementById('word-input');
@@ -20,21 +17,29 @@ let gameOver          = false;
 let consecutiveErrors = 0;
 const MAX_ERRORS = 3;
 
-// --- Gemini API ---
-async function askGemini(prompt) {
-  const apiKey = GEMINI_API_KEY;
+// デフォルトのAPIキー（入力欄が空のときに使用）
+const DEFAULT_API_KEY = 'sk-proj-l6z0dK9fD-e6w3d8yfqNq-NykdD';
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 30, temperature: 1.0 }
-      })
-    }
-  );
+// --- OpenAI API ---
+async function askOpenAI(prompt) {
+  const apiKey = document.getElementById('api-key-input')?.value.trim() || DEFAULT_API_KEY;
+  if (!apiKey) {
+    throw new Error('APIキーが設定されていません');
+  }
+
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: prompt }],
+      max_tokens: 30,
+      temperature: 1.0
+    })
+  });
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -42,7 +47,7 @@ async function askGemini(prompt) {
   }
 
   const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? 'パス';
+  return data.choices?.[0]?.message?.content?.trim() ?? 'パス';
 }
 
 function buildPrompt() {
@@ -120,7 +125,7 @@ async function aiTurn() {
   showMessage('', false);
 
   try {
-    const aiWord = await askGemini(buildPrompt());
+    const aiWord = await askOpenAI(buildPrompt());
 
     if (!aiWord || aiWord === 'パス') {
       gameOver = true;
@@ -148,7 +153,7 @@ async function aiTurn() {
 
   } catch (e) {
     showMessage(`AI接続エラー: ${e.message || e}`, true);
-    console.error('Gemini API error:', e);
+    console.error('OpenAI API error:', e);
     isPlayerTurn = true;
     turnIndicator.textContent = 'あなたの番です';
     turnIndicator.classList.remove('ai-turn');
