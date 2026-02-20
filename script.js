@@ -1,3 +1,6 @@
+// Gemini APIキー
+const GEMINI_API_KEY = 'AizaSyAN7L-CpAJnaauoHrTm1XeP9XtO_glqW3k';
+
 // DOM要素
 const wordChain     = document.getElementById('word-chain');
 const wordInput     = document.getElementById('word-input');
@@ -8,9 +11,6 @@ const resultModal   = document.getElementById('result-modal');
 const resultTitle   = document.getElementById('result-title');
 const resultMessage = document.getElementById('result-message');
 const restartBtn    = document.getElementById('restart-btn');
-const apiKeyInput   = document.getElementById('api-key-input');
-const apiKeySave    = document.getElementById('api-key-save');
-const apiKeyNote    = document.getElementById('api-key-note');
 
 // ゲーム状態
 let usedWords         = new Set();
@@ -20,34 +20,9 @@ let gameOver          = false;
 let consecutiveErrors = 0;
 const MAX_ERRORS = 3;
 
-// --- APIキー管理 ---
-function getApiKey() {
-  return localStorage.getItem('gemini_api_key') || '';
-}
-
-function updateApiKeyUI() {
-  const key = getApiKey();
-  if (key) {
-    apiKeyInput.value = key;
-    apiKeyNote.textContent = 'APIキーが保存されています';
-    apiKeyNote.className = 'api-key-note saved';
-  } else {
-    apiKeyNote.textContent = 'APIキーを入力してください';
-    apiKeyNote.className = 'api-key-note';
-  }
-}
-
-apiKeySave.addEventListener('click', () => {
-  const key = apiKeyInput.value.trim();
-  if (!key) return;
-  localStorage.setItem('gemini_api_key', key);
-  updateApiKeyUI();
-});
-
 // --- Gemini API ---
 async function askGemini(prompt) {
-  const apiKey = getApiKey();
-  if (!apiKey) throw new Error('APIキー未設定');
+  const apiKey = GEMINI_API_KEY;
 
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -138,14 +113,6 @@ function showResult(type, title, msg) {
 }
 
 async function aiTurn() {
-  if (!getApiKey()) {
-    showMessage('APIキーを入力してから遊んでください', true);
-    isPlayerTurn = true;
-    submitBtn.disabled = false;
-    wordInput.disabled = false;
-    return;
-  }
-
   turnIndicator.textContent = 'AIの番です...';
   turnIndicator.classList.add('ai-turn');
   submitBtn.disabled = true;
@@ -254,5 +221,4 @@ wordInput.addEventListener('keydown', (e) => {
 restartBtn.addEventListener('click', resetGame);
 
 // 初期化
-updateApiKeyUI();
 resetGame();
