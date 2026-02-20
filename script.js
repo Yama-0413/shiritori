@@ -49,7 +49,7 @@ function buildPrompt() {
   const usedList = [...usedWords].join('、') || 'なし';
   return `あなたはしりとりの相手です。
 【条件】
-- 「${lastChar}」で始まる日本語の単語を1つだけ答えてください。
+- 「${lastChar}」で始まる日本語の単語を1つだけ答えてください（1文字でもOK）。
 - 「ん」で終わる単語は禁止です。
 - 次に挙げた単語は既に使われているので使わないでください：[${usedList}]
 【回答ルール】
@@ -72,8 +72,8 @@ function isHiraganaOnly(str) {
 }
 
 function validateWord(word) {
-  if (word.length < 2) {
-    return { ok: false, message: '2文字以上の言葉を入力してください' };
+  if (word.length < 1) {
+    return { ok: false, message: '言葉を入力してください' };
   }
   if (!isHiraganaOnly(word)) {
     return { ok: false, message: 'ひらがなで入力してください' };
