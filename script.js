@@ -18,7 +18,7 @@ let consecutiveErrors = 0;
 const MAX_ERRORS = 3;
 
 // デフォルトのAPIキー（入力欄が空のときに使用）
-const DEFAULT_API_KEY = 'sk-proj-l6z0dK9fD-e6w3d8yfqNq-NykdD';
+const DEFAULT_API_KEY = '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';
 
 // --- OpenAI API ---
 async function askOpenAI(prompt) {
