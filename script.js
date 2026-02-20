@@ -1,98 +1,88 @@
-// しりとり用の語彙（頭文字ごと、「ん」で終わらない言葉のみ）
-// ※ 重複キー禁止・「ん」終わり禁止
-const WORD_LIST = {
-  'あ': ['あめ', 'あひる', 'あり', 'あさ', 'あき', 'あじ', 'あか', 'あお', 'あたま'],
-  'い': ['いぬ', 'いちご', 'いす', 'いと', 'いか', 'いけ', 'いわ', 'いのしし'],
-  'う': ['うさぎ', 'うし', 'うみ', 'うた', 'うで', 'うき', 'うわさ'],
-  'え': ['えび', 'えだ', 'えさ', 'えのぐ', 'えがお'],
-  'お': ['おに', 'おかし', 'おまめ', 'おちゃ', 'おりがみ', 'おと', 'おか', 'おはし'],
-  'か': ['かめ', 'かば', 'かき', 'かぜ', 'かみ', 'かえる', 'かさ', 'からす', 'かわ', 'かに'],
-  'き': ['きつね', 'きいろ', 'きのこ', 'きり', 'きで', 'きて'],
-  'く': ['くま', 'くつ', 'くち', 'くも', 'くだもの', 'くすり', 'くり', 'くわ'],
-  'け': ['けむし', 'けしき', 'けいたい', 'けいと'],
-  'こ': ['こま', 'こい', 'こめ', 'こねこ', 'ことり', 'こけ'],
-  'さ': ['さくら', 'さる', 'さかな', 'さいふ', 'さとう', 'さつまいも'],
-  'し': ['しか', 'しお', 'しかく', 'しろ', 'しいたけ', 'しごと'],
-  'す': ['すいか', 'すずめ', 'すし', 'すな', 'すもも', 'するめ', 'すぎ'],
-  'せ': ['せみ', 'せかい', 'せき', 'せとか'],
-  'そ': ['そら', 'そば', 'そうじ', 'そと'],
-  'た': ['たこ', 'たまご', 'たね', 'たけ', 'たぬき', 'たいよう'],
-  'ち': ['ちず', 'ちから', 'ちいさい', 'ちちおや'],
-  'つ': ['つき', 'つめ', 'つる', 'つくえ', 'つり', 'つばめ', 'つばき'],
-  'て': ['てぶくろ', 'てがみ', 'てんき', 'てら', 'てつ'],
-  'と': ['とり', 'とけい', 'とまと', 'とんぼ', 'とびら', 'とうふ'],
-  'な': ['なす', 'なつ', 'なまこ', 'なべ', 'なわ'],
-  'に': ['にわとり', 'にじ', 'にく', 'にど'],
-  'ぬ': ['ぬま', 'ぬりえ', 'ぬの'],
-  'ね': ['ねこ', 'ねつ', 'ねぎ', 'ねずみ'],
-  'の': ['のり', 'のき', 'のはら'],
-  'は': ['はな', 'はし', 'はこ', 'はる', 'はと', 'はくさい'],
-  'ひ': ['ひつじ', 'ひまわり', 'ひこうき', 'ひかり', 'ひも'],
-  'ふ': ['ふね', 'ふく', 'ふじ', 'ふるさと', 'ふた'],
-  'へ': ['へび', 'へや', 'へいわ'],
-  'ほ': ['ほたる', 'ほし', 'ほね', 'ほら'],
-  'ま': ['まめ', 'まど', 'まき', 'まつ', 'まくら'],
-  'み': ['みかん', 'みつ', 'みず', 'みみ', 'みち', 'みのむし'],
-  'む': ['むかで', 'むし', 'むすめ', 'むら'],
-  'め': ['めだか', 'めし', 'めいろ'],
-  'も': ['もも', 'もり', 'もぐら', 'もち'],
-  'や': ['やま', 'やかん', 'やぎ', 'やきとり'],
-  'ゆ': ['ゆき', 'ゆめ', 'ゆかた', 'ゆびわ'],
-  'よ': ['よる', 'よむ', 'よか'],
-  'ら': ['らっぱ', 'らっこ', 'らいおん'],
-  'り': ['りんご', 'りす', 'りく', 'りょうり'],
-  'る': ['るす'],
-  'れ': ['れっしゃ', 'れいぞうこ'],
-  'ろ': ['ろうそく', 'ろうか'],
-  'わ': ['わに', 'わかめ', 'わた', 'わさび'],
-  // 濁音
-  'が': ['がちょう', 'がっこう', 'がま'],
-  'ぎ': ['ぎゅうにゅう'],
-  'ぐ': ['ぐるぐる'],
-  'げ': ['げた'],
-  'ご': ['ごま', 'ごりら', 'ごむ'],
-  'ざ': ['ざるそば'],
-  'じ': ['じしょ', 'じてんしゃ'],
-  'ず': ['ずれ', 'ずわいがに'],
-  'ぜ': ['ぜに'],
-  'ぞ': ['ぞう', 'ぞうり'],
-  'だ': ['だいく', 'だいどころ', 'だちょう'],
-  'で': ['でんわ', 'でんしゃ', 'でんき'],
-  'ど': ['どらやき', 'どうぶつ', 'どんぐり'],
-  'ば': ['ばなな', 'ばら', 'ばす'],
-  'び': ['びわ', 'びせいぶつ'],
-  'ぶ': ['ぶた', 'ぶどう', 'ぶり'],
-  'べ': ['べんとう', 'べに'],
-  'ぼ': ['ぼうし', 'ぼうず'],
-  // 半濁音
-  'ぱ': ['ぱせり', 'ぱんだ'],
-  'ぴ': ['ぴあの'],
-  'ぷ': ['ぷろ'],
-  'ぺ': ['ぺらぺら'],
-  'ぽ': ['ぽすと'],
-};
-
 // DOM要素
-const wordChain  = document.getElementById('word-chain');
-const wordInput  = document.getElementById('word-input');
-const submitBtn  = document.getElementById('submit-btn');
-const messageEl  = document.getElementById('message');
+const wordChain     = document.getElementById('word-chain');
+const wordInput     = document.getElementById('word-input');
+const submitBtn     = document.getElementById('submit-btn');
+const messageEl     = document.getElementById('message');
 const turnIndicator = document.getElementById('turn-indicator');
 const resultModal   = document.getElementById('result-modal');
 const resultTitle   = document.getElementById('result-title');
 const resultMessage = document.getElementById('result-message');
 const restartBtn    = document.getElementById('restart-btn');
+const apiKeyInput   = document.getElementById('api-key-input');
+const apiKeySave    = document.getElementById('api-key-save');
+const apiKeyNote    = document.getElementById('api-key-note');
 
 // ゲーム状態
-let usedWords        = new Set();
-let lastChar         = '';   // 空文字 = 最初のターン（自由入力）
-let isPlayerTurn     = true;
-let gameOver         = false;
+let usedWords         = new Set();
+let lastChar          = '';
+let isPlayerTurn      = true;
+let gameOver          = false;
 let consecutiveErrors = 0;
 const MAX_ERRORS = 3;
 
-// 最後の文字を取得（小書きかな対応）
-// 例: 「おちゃ」→ 'ゃ' は小書き → slice(-2,-1) = 'ち'
+// --- APIキー管理 ---
+function getApiKey() {
+  return localStorage.getItem('gemini_api_key') || '';
+}
+
+function updateApiKeyUI() {
+  const key = getApiKey();
+  if (key) {
+    apiKeyInput.value = key;
+    apiKeyNote.textContent = 'APIキーが保存されています';
+    apiKeyNote.className = 'api-key-note saved';
+  } else {
+    apiKeyNote.textContent = 'APIキーを入力してください';
+    apiKeyNote.className = 'api-key-note';
+  }
+}
+
+apiKeySave.addEventListener('click', () => {
+  const key = apiKeyInput.value.trim();
+  if (!key) return;
+  localStorage.setItem('gemini_api_key', key);
+  updateApiKeyUI();
+});
+
+// --- Gemini API ---
+async function askGemini(prompt) {
+  const apiKey = getApiKey();
+  if (!apiKey) throw new Error('APIキー未設定');
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 30, temperature: 1.0 }
+      })
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? 'パス';
+}
+
+function buildPrompt() {
+  const usedList = [...usedWords].join('、') || 'なし';
+  return `あなたはしりとりの相手です。
+【条件】
+- 「${lastChar}」で始まる日本語の単語を1つだけ答えてください。
+- 「ん」で終わる単語は禁止です。
+- 次に挙げた単語は既に使われているので使わないでください：[${usedList}]
+【回答ルール】
+- 条件を満たす単語を1つだけ、ひらがなで答えてください。説明や余計な文字は付けないでください。
+- 条件を満たす単語が思いつかない場合は「パス」とだけ答えてください。`;
+}
+
+// --- しりとりロジック ---
 function getLastChar(word) {
   const last = word.slice(-1);
   const smallKana = 'ゃゅょぁぃぅぇぉっ';
@@ -102,12 +92,10 @@ function getLastChar(word) {
   return last;
 }
 
-// ひらがな（＋長音符）のみかチェック
 function isHiraganaOnly(str) {
   return /^[\u3040-\u309f\u30fc]+$/.test(str);
 }
 
-// バリデーション
 function validateWord(word) {
   if (word.length < 2) {
     return { ok: false, message: '2文字以上の言葉を入力してください' };
@@ -115,7 +103,6 @@ function validateWord(word) {
   if (!isHiraganaOnly(word)) {
     return { ok: false, message: 'ひらがなで入力してください' };
   }
-  // 最初のターンは頭文字チェックをスキップ
   if (lastChar && word[0] !== lastChar) {
     return { ok: false, message: `「${lastChar}」で始まる言葉を入力してください` };
   }
@@ -128,7 +115,6 @@ function validateWord(word) {
   return { ok: true };
 }
 
-// 単語をチェーンに追加
 function addToChain(word, isAI = false) {
   const span = document.createElement('span');
   span.className = 'word' + (isAI ? ' ai' : '');
@@ -137,35 +123,47 @@ function addToChain(word, isAI = false) {
   wordChain.scrollLeft = wordChain.scrollWidth;
 }
 
-// メッセージ表示
 function showMessage(text, isError = true) {
   messageEl.textContent = text;
   messageEl.className = 'message' + (isError ? '' : ' success');
 }
 
-// AIの手を考える
-function getAIWord() {
-  const candidates = (WORD_LIST[lastChar] || []).filter(w =>
-    !usedWords.has(w) && !w.endsWith('ん') && w.length >= 2
-  );
-  if (candidates.length === 0) return null;
-  return candidates[Math.floor(Math.random() * candidates.length)];
+function showResult(type, title, msg) {
+  resultTitle.textContent = title;
+  resultMessage.textContent = msg;
+  resultModal.classList.remove('hidden');
+  const content = resultModal.querySelector('.result-content');
+  content.classList.remove('win', 'lose');
+  content.classList.add(type);
 }
 
-// AIのターン
-function aiTurn() {
+async function aiTurn() {
+  if (!getApiKey()) {
+    showMessage('APIキーを入力してから遊んでください', true);
+    isPlayerTurn = true;
+    submitBtn.disabled = false;
+    wordInput.disabled = false;
+    return;
+  }
+
   turnIndicator.textContent = 'AIの番です...';
   turnIndicator.classList.add('ai-turn');
   submitBtn.disabled = true;
   wordInput.disabled = true;
   showMessage('', false);
 
-  setTimeout(() => {
-    const aiWord = getAIWord();
+  try {
+    const aiWord = await askGemini(buildPrompt());
 
-    if (!aiWord) {
+    if (!aiWord || aiWord === 'パス') {
       gameOver = true;
-      showResult('win', 'あなたの勝ち！🎉', 'AIが続けられる言葉を持っていません。お見事！');
+      showResult('win', 'あなたの勝ち！🎉', 'AIが続けられる言葉を思いつきませんでした。お見事！');
+      return;
+    }
+
+    if (aiWord.endsWith('ん')) {
+      gameOver = true;
+      showResult('win', 'あなたの勝ち！🎉', `AIが「${aiWord}」と言いました。「ん」で終わったのでAIの負けです！`);
       return;
     }
 
@@ -180,20 +178,17 @@ function aiTurn() {
     wordInput.disabled = false;
     wordInput.focus();
     showMessage(`「${lastChar}」で始まる言葉を入力してください`, false);
-  }, 900);
+
+  } catch (e) {
+    showMessage(`AI接続エラー: ${e.message}`, true);
+    isPlayerTurn = true;
+    turnIndicator.textContent = 'あなたの番です';
+    turnIndicator.classList.remove('ai-turn');
+    submitBtn.disabled = false;
+    wordInput.disabled = false;
+  }
 }
 
-// 結果モーダル表示
-function showResult(type, title, msg) {
-  resultTitle.textContent = title;
-  resultMessage.textContent = msg;
-  resultModal.classList.remove('hidden');
-  const content = resultModal.querySelector('.result-content');
-  content.classList.remove('win', 'lose');
-  content.classList.add(type);
-}
-
-// 送信処理
 function handleSubmit() {
   if (gameOver || !isPlayerTurn) return;
 
@@ -201,14 +196,12 @@ function handleSubmit() {
   const result = validateWord(word);
 
   if (!result.ok) {
-    // 「ん」終わりは即負け
     if (result.isLose) {
       gameOver = true;
       showMessage(result.message);
       setTimeout(() => showResult('lose', 'あなたの負け...😢', `「${word}」は「ん」で終わっています。`), 400);
       return;
     }
-    // その他のミスは3回までやり直し可
     consecutiveErrors++;
     const remaining = MAX_ERRORS - consecutiveErrors;
     if (remaining > 0) {
@@ -221,7 +214,6 @@ function handleSubmit() {
     return;
   }
 
-  // 有効な入力
   consecutiveErrors = 0;
   usedWords.add(word);
   addToChain(word, false);
@@ -233,7 +225,6 @@ function handleSubmit() {
   aiTurn();
 }
 
-// ゲームリセット
 function resetGame() {
   usedWords.clear();
   lastChar          = '';
@@ -254,7 +245,6 @@ function resetGame() {
 // イベントリスナー
 submitBtn.addEventListener('click', handleSubmit);
 
-// IME変換中（フリック入力など）はEnterで送信しない
 let isComposing = false;
 wordInput.addEventListener('compositionstart', () => { isComposing = true; });
 wordInput.addEventListener('compositionend',   () => { isComposing = false; });
@@ -264,4 +254,5 @@ wordInput.addEventListener('keydown', (e) => {
 restartBtn.addEventListener('click', resetGame);
 
 // 初期化
+updateApiKeyUI();
 resetGame();
