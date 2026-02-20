@@ -22,7 +22,7 @@ const DEFAULT_API_KEY = 'sk-proj-l6z0dK9fD-e6w3d8yfqNq-NykdD';
 
 // --- OpenAI API ---
 async function askOpenAI(prompt) {
-  const apiKey = document.getElementById('api-key-input')?.value.trim() || DEFAULT_API_KEY;
+  const apiKey = DEFAULT_API_KEY;
   if (!apiKey) {
     throw new Error('APIキーが設定されていません');
   }
