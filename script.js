@@ -212,7 +212,7 @@ function resetGame() {
   wordInput.disabled  = false;
   resultModal.classList.add('hidden');
   wordInput.focus();
-  showMessage('最初の言葉を自由に入力してください（ひらがな2文字以上）', false);
+  showMessage('最初の言葉を自由に入力してください', false);
 }
 
 // イベントリスナー
