@@ -1,5 +1,5 @@
 // Gemini APIキー
-const GEMINI_API_KEY = 'AlzaSyAN7L-CpAJnaauoHrTm1XeP9XtO_glqW3k';
+const GEMINI_API_KEY = 'AIzaSyAN7L-CpAJnaauoHrTm1XeP9XtO_gIqW3k';
 
 // DOM要素
 const wordChain     = document.getElementById('word-chain');
