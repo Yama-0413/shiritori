@@ -25,7 +25,7 @@ async function askGemini(prompt) {
   const apiKey = GEMINI_API_KEY;
 
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -147,7 +147,8 @@ async function aiTurn() {
     showMessage(`「${lastChar}」で始まる言葉を入力してください`, false);
 
   } catch (e) {
-    showMessage(`AI接続エラー: ${e.message}`, true);
+    showMessage(`AI接続エラー: ${e.message || e}`, true);
+    console.error('Gemini API error:', e);
     isPlayerTurn = true;
     turnIndicator.textContent = 'あなたの番です';
     turnIndicator.classList.remove('ai-turn');
