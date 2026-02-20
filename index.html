@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>しりとり対戦 - AIと遊ぼう</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🍎 しりとり対戦 🍊</h1>
+      <p class="subtitle">AIとしりとりで対決しよう</p>
+    </header>
+
+    <div class="game-area">
+      <div class="rules">
+        <h2>ルール</h2>
+        <ul>
+          <li>前の言葉の最後の文字で始まる言葉を言おう</li>
+          <li>「ん」で終わる言葉を言ったら負け</li>
+          <li>同じ言葉は使えない</li>
+        </ul>
+      </div>
+
+      <div class="chain-display">
+        <h3>しりとりの流れ</h3>
+        <div id="word-chain"></div>
+      </div>
+
+      <div class="turn-indicator" id="turn-indicator">
+        あなたの番です
+      </div>
+
+      <div class="input-area">
+        <input
+          type="text"
+          id="word-input"
+          placeholder="ひらがなで入力"
+          maxlength="20"
+          autocomplete="off"
+          inputmode="hiragana"
+        >
+        <button id="submit-btn">送信</button>
+      </div>
+
+      <div class="message" id="message"></div>
+    </div>
+
+    <div class="result-modal hidden" id="result-modal">
+      <div class="result-content">
+        <h2 id="result-title"></h2>
+        <p id="result-message"></p>
+        <button id="restart-btn">もう一度遊ぶ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
